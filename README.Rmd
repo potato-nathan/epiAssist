@@ -1,35 +1,38 @@
+---
+output: github_document
+---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
 
 # epiAssist
 
 <!-- badges: start -->
-
 <!-- badges: end -->
 
 ## Installation
 
-You can install the development version of from
-[GitHub](https://github.com/) with:
+You can install the development version of from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
 devtools::install_github("potato-nathan/epiAssist")
 ```
-
 ## Example
 
 This is a basic example which shows you how to solve a common problem:
 
-``` r
+```{r example}
 library(epiAssist)
 library(epiR)
-#> Loading required package: survival
-#> Warning: package 'survival' was built under R version 4.0.4
-#> Package epiR 2.0.17 is loaded
-#> Type help(epi.about) for summary information
-#> Type browseVignettes(package = 'epiR') to learn how to use epiR for applied epidemiological analyses
-#> 
 
 # the {epiR} function epi.2by2() requires that tables be in a particular orientation in order to provide proper output. Essentially, it needs to be able to identify what's an exposure, and what's an outcome (and their opposites).
 
@@ -39,7 +42,6 @@ library(epiR)
 
 set.seed(234)
 require(magrittr)
-#> Loading required package: magrittr
 
 sample <- dplyr::tibble("A" = stats::rnorm(100, 50, 4.5),
                        "B" = seq(1,300,3))
@@ -59,52 +61,7 @@ sample$death <- sample(died, 100, replace = TRUE)
 tab <- table(sample$pesticide, sample$death, sample$fruit)
 
 tab
-#> , ,  = Kiwi
-#> 
-#>             
-#>              Dead Not dead
-#>   Chemical      6        6
-#>   Organic       3        6
-#>   Squish 'em    4        6
-#> 
-#> , ,  = Melon
-#> 
-#>             
-#>              Dead Not dead
-#>   Chemical      3        5
-#>   Organic       9        4
-#>   Squish 'em    8        4
-#> 
-#> , ,  = Peach
-#> 
-#>             
-#>              Dead Not dead
-#>   Chemical      3        6
-#>   Organic       5        8
-#>   Squish 'em    7        7
 
 fliptable(tab)
-#> , ,  = Kiwi
-#> 
-#>             
-#>              Not dead Dead
-#>   Squish 'em        6    4
-#>   Organic           6    3
-#>   Chemical          6    6
-#> 
-#> , ,  = Melon
-#> 
-#>             
-#>              Not dead Dead
-#>   Squish 'em        4    8
-#>   Organic           4    9
-#>   Chemical          5    3
-#> 
-#> , ,  = Peach
-#> 
-#>             
-#>              Not dead Dead
-#>   Squish 'em        7    7
-#>   Organic           8    5
-#>   Chemical          6    3
 ```
+
