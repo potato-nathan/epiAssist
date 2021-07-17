@@ -21,23 +21,22 @@
 #' food <- dplyr::tibble(
 #' fruits = sample(c("Orange", "Tomato"), 100, replace = TRUE),
 #' vegs = sample(c("Okra", "Fingernails"), 100, replace = TRUE),
-#' grain = sample(c("Baked", "Raw", "Monsanto"), 100, replace = TRUE),
+#' grain = sample(c("Baked", "Raw", "Monsanto"), 100, replace = TRUE))
 #'
 #' tab <- flipTable(table(food))
 #'
 #' epiHomog(tab)
 #'
 epiHomog <- function(tab, metric = "Risk Difference"){
-
   if(class(tab) != "table"){
     stop('flip table only accepts objects that are tables created with function table()')
   }
 
-  if(length(dim(tab) < 3)){
+  if(length(dim(tab)) < 3){
     stop('This function tests homogeneity between stratified 2x2 tables')
   }
 
-  if(length(dim(tab) > 3)){
+  if(length(dim(tab)) > 3){
     stop('What do you plan on doing with a table of more than 3 dimensions?')
   }
 

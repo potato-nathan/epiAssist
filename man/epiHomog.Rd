@@ -31,7 +31,7 @@ format required here.
 food <- dplyr::tibble(
 fruits = sample(c("Orange", "Tomato"), 100, replace = TRUE),
 vegs = sample(c("Okra", "Fingernails"), 100, replace = TRUE),
-grain = sample(c("Baked", "Raw", "Monsanto"), 100, replace = TRUE),
+grain = sample(c("Baked", "Raw", "Monsanto"), 100, replace = TRUE))
 
 tab <- flipTable(table(food))
 
