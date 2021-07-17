@@ -1,3 +1,32 @@
+#' Stratified test of homogeneity
+#'
+#' Calculates chi-square test statistic and p-value for risk differences
+#' and risk ratios of stratified 2x2 tables.
+#'
+#' For calculation to be correct, table must be formatted same as those
+#' used for epi.2by2(), where counts for the outcome of interest and the
+#' exposed group appear in the upper-left corner of each stratified table.
+#'
+#' If your 2x2 tables are composed of factors where the referent variable is
+#' level 0 and the index group is level 1, use flipTable() to re-orient to the
+#' format required here.
+#'
+#' @param tab a table object
+#' @param metric "Risk Difference" or "Risk Ratio"
+#'
+#' @return test statistic and p-value
+#' @export
+#'
+#' @examples
+#' food <- dplyr::tibble(
+#' fruits = sample(c("Orange", "Tomato"), 100, replace = TRUE),
+#' vegs = sample(c("Okra", "Fingernails"), 100, replace = TRUE),
+#' grain = sample(c("Baked", "Raw", "Monsanto"), 100, replace = TRUE),
+#'
+#' tab <- flipTable(table(food))
+#'
+#' epiHomog(tab)
+#'
 epiHomog <- function(tab, metric = "Risk Difference"){
 
   if(class(tab) != "table"){
@@ -12,13 +41,15 @@ epiHomog <- function(tab, metric = "Risk Difference"){
     stop('What do you plan on doing with a table of more than 3 dimensions?')
   }
 
+  x <- dim(tab)[3]
+
   # calculate total datapoints in the various index/reference groups
   count.in <- tab[1,1,x] + tab[1,2,x]
   count.ref <- tab[2,1,x] + tab[2,2,x]
 
   # calculate risk of the outcome in each exposure/treatment group
-  risk.in <- tab[1,1,x] / total.in.1
-  risk.ref <- tab[2,1,x] / total.ref.1
+  risk.in <- tab[1,1,x] / count.in
+  risk.ref <- tab[2,1,x] / count.in
 
 
   # calculation of variance of risk betweent treatment groups
@@ -34,10 +65,10 @@ epiHomog <- function(tab, metric = "Risk Difference"){
   Q <- sum((Y - r)^2/w)
 
   # compute the p-value of Q, using degrees of freedom = (# of strata - 1) and lower.tail = FALSE
-  p <- stat::pchisq(Q, df = (dim(tab)[3]-1), lower.tail = FALSE)
+  p <- stats::pchisq(Q, df = (dim(tab)[3]-1), lower.tail = FALSE)
 
   # TODO: Add equation for homogeneity of risk ratios
 
-  return(tibble("Test statistic" = Q, "p-value" = p))
+  return(dplyr::tibble("Test statistic" = Q, "p-value" = p))
 
 }
