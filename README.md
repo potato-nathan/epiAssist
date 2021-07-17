@@ -23,7 +23,7 @@ But alas, here we are and I think I’ve been discovered.
 
 ## Installation
 
-You can install the development version of from
+You can install the development version of epiAssist from
 [GitHub](https://github.com/) with:
 
 ``` r

@@ -29,7 +29,7 @@ But alas, here we are and I think I've been discovered.
 
 ## Installation
 
-You can install the development version of from [GitHub](https://github.com/) with:
+You can install the development version of epiAssist from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
