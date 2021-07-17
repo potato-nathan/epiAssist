@@ -30,7 +30,7 @@
 #'tab
 #'
 #' fliptable(tab)
-fliptable <- function(tab){
+flipTable <- function(tab){
   # also need to check if it's a table object? how to do that?
 
   if(class(tab) != "table"){
