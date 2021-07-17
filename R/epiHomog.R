@@ -1,0 +1,43 @@
+epiHomog <- function(tab, metric = "Risk Difference"){
+
+  if(class(tab) != "table"){
+    stop('flip table only accepts objects that are tables created with function table()')
+  }
+
+  if(length(dim(tab) < 3)){
+    stop('This function tests homogeneity between stratified 2x2 tables')
+  }
+
+  if(length(dim(tab) > 3)){
+    stop('What do you plan on doing with a table of more than 3 dimensions?')
+  }
+
+  # calculate total datapoints in the various index/reference groups
+  count.in <- tab[1,1,x] + tab[1,2,x]
+  count.ref <- tab[2,1,x] + tab[2,2,x]
+
+  # calculate risk of the outcome in each exposure/treatment group
+  risk.in <- tab[1,1,x] / total.in.1
+  risk.ref <- tab[2,1,x] / total.ref.1
+
+
+  # calculation of variance of risk betweent treatment groups
+  w <- ((risk.in * (1 - risk.in)) / (count.in - 1)) + ((risk.ref * (1 - risk.ref)) / (count.ref - 1))
+
+  # calculation of risk difference in each strata
+  Y <- risk.in - risk.ref
+
+  # calculation of Weighted Least Squares estimate
+  r <- sum(Y/w) / sum(1/w)
+
+  # calculation of WLS chi-square test statistic (Q)
+  Q <- sum((Y - r)^2/w)
+
+  # compute the p-value of Q, using degrees of freedom = (# of strata - 1) and lower.tail = FALSE
+  p <- stat::pchisq(Q, df = (dim(tab)[3]-1), lower.tail = FALSE)
+
+  # TODO: Add equation for homogeneity of risk ratios
+
+  return(tibble("Test statistic" = Q, "p-value" = p))
+
+}
