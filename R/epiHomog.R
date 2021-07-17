@@ -27,7 +27,7 @@
 #'
 #' epiHomog(tab)
 #'
-epiHomog <- function(tab, metric = "Risk Difference"){
+epiHomo <- function(tab, metric = "Risk Difference"){
   if(class(tab) != "table"){
     stop('flip table only accepts objects that are tables created with function table()')
   }
@@ -39,20 +39,32 @@ epiHomog <- function(tab, metric = "Risk Difference"){
   if(length(dim(tab)) > 3){
     stop('What do you plan on doing with a table of more than 3 dimensions?')
   }
+  #browser()
+  x <- c(1:dim(tab)[3])
 
-  x <- dim(tab)[3]
+  total.in <- c()
+  total.ref <- c()
+  outcome.in <- c()
+  outcome.ref <- c()
 
-  # calculate total datapoints in the various index/reference groups
-  count.in <- tab[1,1,x] + tab[1,2,x]
-  count.ref <- tab[2,1,x] + tab[2,2,x]
+  for(i in x){
+
+    # calculate total datapoints in the various index/reference groups
+    total.in <- append(total.in,tab[1,1,i] + tab[1,2,i])
+    total.ref <- append(total.ref, tab[2,1,i] + tab[2,2,i])
+
+    outcome.in <- append(outcome.in, tab[1,1,i])
+    outcome.ref <- append(outcome.ref, tab[2,1,i])
+
+  }
+
 
   # calculate risk of the outcome in each exposure/treatment group
-  risk.in <- tab[1,1,x] / count.in
-  risk.ref <- tab[2,1,x] / count.in
-
+  risk.in <- outcome.in / total.in
+  risk.ref <- outcome.ref / total.ref
 
   # calculation of variance of risk betweent treatment groups
-  w <- ((risk.in * (1 - risk.in)) / (count.in - 1)) + ((risk.ref * (1 - risk.ref)) / (count.ref - 1))
+  w <- ((risk.in * (1 - risk.in)) / (total.in - 1)) + ((risk.ref * (1 - risk.ref)) / (total.ref - 1))
 
   # calculation of risk difference in each strata
   Y <- risk.in - risk.ref
