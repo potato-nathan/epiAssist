@@ -3,6 +3,20 @@
 
 # epiAssist
 
+A package with functions designed to help R beginners with superfluous
+programming tasks involved with Biostat 705 Lab
+
+## Welcome, lonesome traveler\!
+
+If you’ve somehow made it to this site, I can only imagine what you must
+be doing with your time. I specifically created this package so that you
+wouldn’t have to go digging around for things as you complete the Labs
+for this semester. Or, at least, not so much.
+
+But alas, here we are and I think I’ve been discovered.
+
+(Don’t tell Larry.)
+
 <!-- badges: start -->
 
 <!-- badges: end -->
@@ -23,17 +37,14 @@ This is a basic example which shows you how to solve a common problem:
 
 ``` r
 library(epiAssist)
-library(epiR)
-#> Loading required package: survival
-#> Warning: package 'survival' was built under R version 4.0.4
-#> Package epiR 2.0.17 is loaded
-#> Type help(epi.about) for summary information
-#> Type browseVignettes(package = 'epiR') to learn how to use epiR for applied epidemiological analyses
-#> 
 
-# the {epiR} function epi.2by2() requires that tables be in a particular orientation in order to provide proper output. Essentially, it needs to be able to identify what's an exposure, and what's an outcome (and their opposites).
+# the {epiR} function epi.2by2() requires that tables be in a particular orientation in order
+#to provide proper output. Essentially, it needs to be able to identify what's an exposure, and
+#what's an outcome (and their opposites).
 
-# {epiAssist}'s fliptable() takes a 2x2 table object, stratified by as many levels as your heart desires, and flips it. This is done assuming that you have coded your variables to be factors, and that the referent variable is always at factor level 0.
+# {epiAssist}'s fliptable() takes a 2x2 table object, stratified by as many levels as your
+#heart desires, and flips it. This is done assuming that you have coded your variables to
+#be factors, and that the referent variable is always at factor level 0.
 
 #For example:
 
