@@ -27,7 +27,7 @@
 #'
 #' epiHomog(tab)
 #'
-epiHomo <- function(tab, metric = "Risk Difference"){
+epiHomog <- function(tab, metric = "Risk Difference"){
   if(class(tab) != "table"){
     stop('flip table only accepts objects that are tables created with function table()')
   }
