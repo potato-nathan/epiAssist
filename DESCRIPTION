@@ -1,5 +1,5 @@
 Package: epiAssist
-Title: What the Package Does (One Line, Title Case)
+Title: Helper functions for Biostat 705 labs
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "First",
@@ -7,7 +7,7 @@ Authors@R:
            role = c("aut", "cre"),
            email = "first.last@example.com",
            comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+Description: This package provides helper functions that help R beginners complete tasks essential to Biostat labs without getting lost in some of the more gratuitous details of the {epiR} package.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
