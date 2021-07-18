@@ -63,7 +63,7 @@ epiHomog <- function(tab, metric = "Risk Difference"){
   risk.in <- outcome.in / total.in
   risk.ref <- outcome.ref / total.ref
 
-  # calculation of variance of risk betweent treatment groups
+  # calculation of variance of risk between treatment groups
   w <- ((risk.in * (1 - risk.in)) / (total.in - 1)) + ((risk.ref * (1 - risk.ref)) / (total.ref - 1))
 
   # calculation of risk difference in each strata
