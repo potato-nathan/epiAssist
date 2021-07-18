@@ -10,39 +10,32 @@
 #' @export
 #'
 #' @examples
-#'
+#' risk_rural <- flipTable(table(kenya$rural, kenya$death))
+#' mAssoc(risk_rural)
 #'
 mAssoc <- function(tab, method = "cohort.count", conf.level = 0.95) {
 
-  if(length(dim(tab)) < 2) {
+  if(length(dim(tab)) != 2) {
     stop("Measures of association only possible on contingency tables of dimensions 2x2 or more")
   }
 
   if(length(dim(tab)) == 2) {
+    #browser()
+    lev <- dim(tab)[1]
 
-  lev <- dim(tab)[1]
+    names <- rownames(tab)
 
-  names <- rownames(tab)
-
-  out <- list()
+    out <- list()
     # generate output for each index level in exposure
-    for(i in 2:lev){
+    for(i in 1:(lev-1)){
 
-      epi.tab <- rbind(tab[1,], tab[i,])
+      epi.tab <- rbind(tab[i,], tab[lev,])
+      cat(paste("MEASURES OF ASSOCIATION FOR: ", names[i], "(index) vs. ", names[lev]), "(referent)")
 
-      x <- epiR::epi.2by2(epi.tab, method = method, conf.level = conf.level, unit = 1, outcome = 'as.columns')
+      print(epiR::epi.2by2(epi.tab, method = method, conf.level = conf.level, unit = 1, outcome = 'as.columns'))
 
-      out <- append(out, x)
-
-    }
-
-  for(i in 1:(lev-1)) {
-
-    cat(paste("MEASURES OF ASSOCIATION FOR: ", names[i], " vs. ", names[lev]))
-    out[i]
-    cat('\n\n\n')
+      cat('\n\n\n')
 
     }
   }
 }
-

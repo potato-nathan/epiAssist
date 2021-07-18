@@ -20,6 +20,7 @@ a list of objects of class epi.2by2 (type ?epi.2by2 for more details)
 This is a wrapper function for the {epiR} function epi.2by2(). It allows the user to obtain measures of association in cases where the exposure variable has more than 2 levels.
 }
 \examples{
-
+risk_rural <- flipTable(table(kenya$rural, kenya$death))
+mAssoc(risk_rural)
 
 }
