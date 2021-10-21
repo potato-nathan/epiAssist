@@ -1,7 +1,8 @@
 #' @title Two proportion z-test
 #' @description Uses z distribution to test for statistical equality of two proportions
-#' @usage prop.z.test(x, n, p = NULL, alternative = c("two.sided", "less", "greater"),
+#' @usage prop_z_test(x, n, p = NULL, alternative = c("two.sided", "less", "greater"),
 #' conf.level = 0.95, correct = FALSE, case_col = 1)
+#'
 #' @param x a vector of length two, providing count
 #' of "successes" or "outcomes of interest" for
 #' either group or a two-dimensional table (or matrix)
@@ -18,6 +19,7 @@
 #' Only used when testing the null that a single proportion equals a given value, or that two proportions are equal; ignored otherwise.
 #' @param correct a logical indicating whether Yates' continuity correction should be applied where possible.
 #' @param case_col if x is a table or matrix, a single integer for the index of the column in which cases appear
+#'
 #' @details Takes a 2x2 table object where default is that cases appear in the first column and counts
 #' of the exposed appear in the second row.
 #'
@@ -30,7 +32,7 @@
 #' of success in the first group is less than, not equal to, or greater than the probability of
 #' success in the second group, as specified by alternative. A confidence interval for the
 #' difference of proportions with confidence level as specified by conf.level and clipped to {-1,1} is returned.
-#' @authors Although DGHI Biostat was responsible for the modification of this code, this code was originally
+#' @author Although DGHI Biostat was responsible for the modification of this code, this code was originally
 #' adapted from that published as a part of the R stats package, which contained the following message:
 #'
 #'  File src/library/stats/R/prop.test.R
@@ -51,10 +53,9 @@
 #'  A copy of the GNU General Public License is available at
 #'  https://www.R-project.org/Licenses/
 #'  @examples
-#'  prop.z.test(x = c(200, 300), n = c(400, 400))
-#'
+#'  prop_z_test(x = c(200, 300), n = c(400, 400))
 
-prop.z.test <-
+prop_z_test <-
   function(x, n, p = NULL, alternative = c("two.sided", "less", "greater"),
            conf.level = 0.95, correct = FALSE, case_col = 1)
   {
