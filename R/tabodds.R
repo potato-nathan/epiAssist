@@ -35,7 +35,6 @@
 #' 2. Statistics Notes: The odds ratio; J Martin Bland, Douglas G Altman
 #' BMJ 2000;320:1468
 #'
-#' @seealso \code{\link{mhodds}}
 #' @keywords odds, odds ratio, frequency table, statistics, descriptive
 #' @author Myo Minn Oo (Email: \email{dr.myominnoo@@gmail.com} |
 #' Website: \url{https://myominnoo.github.io/})
@@ -137,8 +136,8 @@ tabodds <-  function(var_exp, var_case, data = NULL,
          xlab = exp_name,
          ylab = "Odds")
     nrow_by <- nrow(t)
-    segments(1:nrow_by, odds, 1:nrow_by, upper, col = "blue", lwd = 2)
-    segments(1:nrow_by, odds, 1:nrow_by, lower, col = "blue", lwd = 2)
+    graphics::segments(1:nrow_by, odds, 1:nrow_by, upper, col = "blue", lwd = 2)
+    graphics::segments(1:nrow_by, odds, 1:nrow_by, lower, col = "blue", lwd = 2)
   }
 
   invisible(t)

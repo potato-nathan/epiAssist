@@ -1,24 +1,62 @@
-#  File src/library/stats/R/prop.test.R
-#  Part of the R package, https://www.R-project.org
-#
-#  Copyright (C) 1995-2012 The R Core Team
-#
-#  This program is free software; you can redistribute it and/or modify
-#  it under the terms of the GNU General Public License as published by
-#  the Free Software Foundation; either version 2 of the License, or
-#  (at your option) any later version.
-#
-#  This program is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU General Public License for more details.
-#
-#  A copy of the GNU General Public License is available at
-#  https://www.R-project.org/Licenses/
+#' @title Two proportion z-test
+#' @description Uses z distribution to test for statistical equality of two proportions
+#' @usage prop.z.test(x, n, p = NULL, alternative = c("two.sided", "less", "greater"),
+#' conf.level = 0.95, correct = FALSE, case_col = 1)
+#' @param x a vector of length two, providing count
+#' of "successes" or "outcomes of interest" for
+#' either group or a two-dimensional table (or matrix)
+#' with 2 columns, giving the counts of successes and
+#' failures, respectively.
+#' @param n a vector of length two for counts of trials/observations in either group;
+#' ignored if x is a matrix or a table.
+#' @param p a vector of length two representing the expected probability
+#' of "success" in either group. The vector's elements must be greater than 0 and less than 1.
+#' @param alternative a character string specifying the alternative hypothesis, must be one of "two.sided" (default),
+#' "greater" or "less". You can specify just the initial letter. Only used for testing the null that a single proportion equals
+#' a given value, or that two proportions are equal; ignored otherwise.
+#' @param conf.level confidence level of the returned confidence interval. Must be a single number between 0 and 1.
+#' Only used when testing the null that a single proportion equals a given value, or that two proportions are equal; ignored otherwise.
+#' @param correct a logical indicating whether Yates' continuity correction should be applied where possible.
+#' @param case_col if x is a table or matrix, a single integer for the index of the column in which cases appear
+#' @details Takes a 2x2 table object where default is that cases appear in the first column and counts
+#' of the exposed appear in the second row.
+#'
+#' Only groups with finite numbers of successes and failures are used. Counts of
+#' successes and failures must be nonnegative and hence not greater than the corresponding
+#' numbers of trials which must be positive. All finite counts should be integers.
+#'
+#' If p is NULL and there is more than one group, the null tested is that the proportions in
+#' each group are the same. If there are two groups, the alternatives are that the probability
+#' of success in the first group is less than, not equal to, or greater than the probability of
+#' success in the second group, as specified by alternative. A confidence interval for the
+#' difference of proportions with confidence level as specified by conf.level and clipped to {-1,1} is returned.
+#' @authors Although DGHI Biostat was responsible for the modification of this code, this code was originally
+#' adapted from that published as a part of the R stats package, which contained the following message:
+#'
+#'  File src/library/stats/R/prop.test.R
+#'  Part of the R package, https://www.R-project.org
+#'
+#'  Copyright (C) 1995-2012 The R Core Team
+#'
+#'  This program is free software; you can redistribute it and/or modify
+#'  it under the terms of the GNU General Public License as published by
+#'  the Free Software Foundation; either version 2 of the License, or
+#'  (at your option) any later version.
+#'
+#'  This program is distributed in the hope that it will be useful,
+#'  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#'  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#'  GNU General Public License for more details.
+#'
+#'  A copy of the GNU General Public License is available at
+#'  https://www.R-project.org/Licenses/
+#'  @examples
+#'  prop.z.test(x = c(200, 300), n = c(400, 400))
+#'
 
 prop.z.test <-
   function(x, n, p = NULL, alternative = c("two.sided", "less", "greater"),
-           conf.level = 0.95, correct = TRUE, case_col = 1)
+           conf.level = 0.95, correct = FALSE, case_col = 1)
   {
     DNAME <- deparse(substitute(x))
 
@@ -42,7 +80,7 @@ prop.z.test <-
         stop("'x' and 'n' must have the same length")
     }
 
-    OK <- complete.cases(x, n)
+    OK <- stats::complete.cases(x, n)
     x <- x[OK]
     n <- n[OK]
     if ((k <- length(x)) < 1L)
@@ -77,14 +115,14 @@ prop.z.test <-
 
     correct <- as.logical(correct)
 
-    ESTIMATE <- setNames(x/n,
+    ESTIMATE <- stats::setNames(x/n,
                          if (k == 1) "p" else paste("prop", 1L:l)[OK])
     NVAL <- p
     CINT <- NULL
     YATES <- if(correct && (k <= 2)) .5 else 0
 
     if (k == 1) {
-      z <- qnorm(if(alternative == "two.sided")
+      z <- stats::qnorm(if(alternative == "two.sided")
         (1 + conf.level) / 2 else conf.level)
       YATES <- min(YATES, abs(x - n * p)) # what are the conditions under which a Yates continuity correction would be applied? Any one cell less than 5? Do we even need to include this here for a z test of two proportions?
       z22n <- z^2 / (2 * n)
@@ -103,8 +141,8 @@ prop.z.test <-
       DELTA <- ESTIMATE[1L] - ESTIMATE[2L]
       YATES <- min(YATES, abs(DELTA) / sum(1/n))
       WIDTH <- (switch(alternative,
-                       "two.sided" = qnorm((1 + conf.level) / 2),
-                       qnorm(conf.level))
+                       "two.sided" = stats::qnorm((1 + conf.level) / 2),
+                       stats::qnorm(conf.level))
                 * sqrt(sum(ESTIMATE * (1 - ESTIMATE) / n))
                 + YATES * sum(1/n))
       CINT <- switch(alternative,
@@ -138,13 +176,13 @@ prop.z.test <-
     names(STATISTIC) <- "Z-score"
 
     if (alternative == "two.sided")
-      PVAL <- pnorm(STATISTIC)
+      PVAL <- stats::pnorm(STATISTIC)
     else {
       if (k == 1) # this implies a test of one proportion...include here? or refer user to binom.test()?
         z <- sign(ESTIMATE - p) * sqrt(STATISTIC) # also just a note that z doesn't appear to be used beyond this. is it even necessary?
       else
         z <- sign(DELTA) * sqrt(STATISTIC)
-      PVAL <- pnorm(STATISTIC, lower.tail = (alternative == "less"))
+      PVAL <- stats::pnorm(STATISTIC, lower.tail = (alternative == "less"))
     }
 
     RVAL <- list(statistic = STATISTIC,
