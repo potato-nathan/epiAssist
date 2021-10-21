@@ -1,8 +1,5 @@
 #' @title Two proportion z-test
 #' @description Uses z distribution to test for statistical equality of two proportions
-#' @usage prop_z_test(x, n, p = NULL, alternative = c("two.sided", "less", "greater"),
-#' conf.level = 0.95, correct = FALSE, case_col = 1)
-#'
 #' @param x a vector of length two, providing count
 #' of "successes" or "outcomes of interest" for
 #' either group or a two-dimensional table (or matrix)
@@ -54,6 +51,7 @@
 #'  https://www.R-project.org/Licenses/
 #'  @examples
 #'  prop_z_test(x = c(200, 300), n = c(400, 400))
+#'  @importFrom stats qnorm pnorm complete.cases setNames
 
 prop_z_test <-
   function(x, n, p = NULL, alternative = c("two.sided", "less", "greater"),

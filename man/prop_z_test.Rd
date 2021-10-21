@@ -4,8 +4,15 @@
 \alias{prop_z_test}
 \title{Two proportion z-test}
 \usage{
-prop_z_test(x, n, p = NULL, alternative = c("two.sided", "less", "greater"),
-conf.level = 0.95, correct = FALSE, case_col = 1)
+prop_z_test(
+  x,
+  n,
+  p = NULL,
+  alternative = c("two.sided", "less", "greater"),
+  conf.level = 0.95,
+  correct = FALSE,
+  case_col = 1
+)
 }
 \arguments{
 \item{x}{a vector of length two, providing count
@@ -71,4 +78,5 @@ A copy of the GNU General Public License is available at
 https://www.R-project.org/Licenses/
 @examples
 prop_z_test(x = c(200, 300), n = c(400, 400))
+@importFrom stats qnorm pnorm complete.cases setNames
 }
