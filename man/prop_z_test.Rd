@@ -2,7 +2,7 @@
 % Please edit documentation in R/prop_z_test.R
 \name{prop_z_test}
 \alias{prop_z_test}
-\title{Two proportion z-test}
+\title{#' Two proportion z-test}
 \usage{
 prop_z_test(
   x,
@@ -37,6 +37,9 @@ Only used when testing the null that a single proportion equals a given value, o
 \item{correct}{a logical indicating whether Yates' continuity correction should be applied where possible.}
 
 \item{case_col}{if x is a table or matrix, a single integer for the index of the column in which cases appear}
+}
+\value{
+htest object
 }
 \description{
 Uses z distribution to test for statistical equality of two proportions
@@ -78,5 +81,4 @@ A copy of the GNU General Public License is available at
 https://www.R-project.org/Licenses/
 @examples
 prop_z_test(x = c(200, 300), n = c(400, 400))
-@importFrom stats qnorm pnorm complete.cases setNames
 }

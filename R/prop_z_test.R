@@ -1,10 +1,11 @@
-#' @title Two proportion z-test
+#' #' Two proportion z-test
 #' @description Uses z distribution to test for statistical equality of two proportions
 #' @param x a vector of length two, providing count
 #' of "successes" or "outcomes of interest" for
 #' either group or a two-dimensional table (or matrix)
 #' with 2 columns, giving the counts of successes and
 #' failures, respectively.
+#'
 #' @param n a vector of length two for counts of trials/observations in either group;
 #' ignored if x is a matrix or a table.
 #' @param p a vector of length two representing the expected probability
@@ -16,6 +17,10 @@
 #' Only used when testing the null that a single proportion equals a given value, or that two proportions are equal; ignored otherwise.
 #' @param correct a logical indicating whether Yates' continuity correction should be applied where possible.
 #' @param case_col if x is a table or matrix, a single integer for the index of the column in which cases appear
+#'
+#' @return htest object
+#'
+#' @export
 #'
 #' @details Takes a 2x2 table object where default is that cases appear in the first column and counts
 #' of the exposed appear in the second row.
@@ -51,7 +56,6 @@
 #'  https://www.R-project.org/Licenses/
 #'  @examples
 #'  prop_z_test(x = c(200, 300), n = c(400, 400))
-#'  @importFrom stats qnorm pnorm complete.cases setNames
 
 prop_z_test <-
   function(x, n, p = NULL, alternative = c("two.sided", "less", "greater"),
