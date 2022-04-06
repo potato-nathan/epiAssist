@@ -10,7 +10,7 @@
 #' @export
 #'
 #' @examples
-#' risk_rural <- flipTable(table(kenya$rural, kenya$death))
+#' risk_rural <- flipTable(table(kenya_1$rural, kenya_1$death))
 #' mAssoc(risk_rural)
 #'
 mAssoc <- function(tab, method = "cohort.count", conf.level = 0.95) {
